@@ -1,0 +1,95 @@
+
+// #### Object Figure - Classe Mère####
+class figure{
+    nbcote: number;
+    type_figure: string;
+    perimetre: number;
+    aire: number;
+    figure_rapport: string;
+    longueur_cote: number;
+    constructor(nbcote: number, type_figure: string, longueur_cote: number){
+        this.nbcote = nbcote;
+        this.type_figure = type_figure;
+        this.perimetre = 0;
+        this.aire = 0;
+        this.longueur_cote = longueur_cote;
+        this.figure_rapport = "Cette figure est un " + this.type_figure + " de " + this.longueur_cote + " cm de côté.\n";
+    }
+    rapport() {
+        return this.figure_rapport;
+    }
+}
+
+// #### Object Figure_Losange ####
+class Figure_Losange extends figure{
+    diag1: number;
+    diag2: number;
+    carre: boolean;
+    constructor(diag1: number, diag2: number) {
+        super(4, "losange", Math.sqrt(Math.pow(diag1 / 2, 2) * Math.pow(diag2 / 2, 2)));
+        this.diag1 = diag1;
+        this.diag2 = diag2;
+        this.calcul_perimetre_losange();
+        this.calcul_aire_losange();
+        this.carre = false;
+        if (diag1 == diag2) {
+            this.carre = true;
+            this.figure_rapport += "Ce losange est un carré.";    
+        }
+    }
+    calcul_perimetre_losange() {
+        this.perimetre = 4 * Math.sqrt(Math.pow(this.diag1 / 2, 2) * Math.pow(this.diag2 / 2, 2));
+        this.figure_rapport += "Son périmètre est de " + this.perimetre + " cm.\n";
+    }
+    calcul_aire_losange() {
+        this.aire = this.diag1 * this.diag2 / 2;
+        this.figure_rapport += "Son aire est de " + this.aire + " cm².\n";
+    }
+}
+
+// #### Object Figure_Triangle ####
+class Figure_Triangle extends figure{
+    constructor(longueur_cote: number) {
+        super(3, "triangle", longueur_cote);
+        this.calcul_perimetre_triangle();
+        this.calcul_aire_triangle();
+    }
+    // Méthodes
+    calcul_perimetre_triangle() {
+        this.perimetre = this.longueur_cote * 3;
+        this.figure_rapport += "Son périmètre est de " + this.perimetre + " cm.\n";
+    }
+    calcul_aire_triangle() {
+        this.aire = Math.pow(this.longueur_cote, 2) / 2;
+        this.figure_rapport += "Son aire est de " + this.aire + " cm².";
+    }
+} 
+
+// #### Fonction Triangle ####
+function Triangle(longueur_cote: number){
+    let triangle1 = new Figure_Triangle(longueur_cote);
+    return triangle1;
+}
+
+// #### Fonction Losange ####
+function Losange(diag1: number, diag2: number){
+    let losange1 = new Figure_Losange(diag1, diag2);
+    return losange1;
+}
+
+
+// #### Programme principal ####
+let t1 = Triangle(5);
+let t2 = Triangle(10);
+let l1 = Losange(5, 6); // diagonale1, diagonale2
+let l2 = Losange(4, 4);
+let Figure = [t1, t2, l1, l2];
+for(let f of Figure){
+console.log(f.rapport());
+}
+
+
+
+
+
+
